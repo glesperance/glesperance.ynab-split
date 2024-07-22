@@ -1,0 +1,25 @@
+# Python
+*.pyc
+*~
+__pycache__
+
+# Env
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+.vscode/
+
+# Poetry
+dist/
+build/
+*.egg-info/
+
+scratch/
+config.yml

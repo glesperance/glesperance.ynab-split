@@ -1,0 +1,19 @@
+# Sample config.yml -- used to configure the accounts to sync and which categories to sync
+accounts:
+  - name: User 1
+    access_token: <access token>
+    budget_id: <budget id>
+    since_date: <since date -- we'll only get transactions after this date>
+    
+    # Group categories to sync
+    groups:
+    - Shared
+
+  - name: User 2
+    access_token: <access token>
+    budget_id: <budget id>
+    since_date: <since date -- we'll only get transactions after this date>
+
+    # Group categories to sync
+    groups:
+    - Shared
