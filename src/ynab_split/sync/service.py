@@ -14,7 +14,7 @@ from .config import SyncSettings, YNABAccountSettings
 
 
 def __ynab_client(account_settings: YNABAccountSettings):
-    return APIClient(account_settings.access_token)
+    return APIClient(account_settings.ynab_access_token)
 
 
 async def __get_transactions(account_settings: YNABAccountSettings) -> pl.DataFrame:
@@ -24,7 +24,7 @@ async def __get_transactions(account_settings: YNABAccountSettings) -> pl.DataFr
         c
         async for c in get_categories_in_groups(
             client,
-            budget_id=account_settings.budget_id,
+            budget_id=account_settings.ynab_budget_id,
             groups=account_settings.groups,
         )
     ]
@@ -33,7 +33,7 @@ async def __get_transactions(account_settings: YNABAccountSettings) -> pl.DataFr
         t.model_dump()
         async for t in list_transactions_in_categories(
             client,
-            budget_id=account_settings.budget_id,
+            budget_id=account_settings.ynab_budget_id,
             since_date=account_settings.since_date,
             categories=cats,
         )
@@ -55,7 +55,7 @@ async def __get_transactions(account_settings: YNABAccountSettings) -> pl.DataFr
     df = pl.from_dicts(transactions, schema=schema)
     df = df.with_columns(
         [
-            pl.lit(account_settings.budget_id).alias("budget_id"),
+            pl.lit(account_settings.ynab_budget_id).alias("budget_id"),
             pl.lit(account_settings.name).alias("account_name"),
             (pl.col("amount").cast(pl.Float64) / 1000).round(2),
         ]
